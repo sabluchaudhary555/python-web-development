@@ -1,9 +1,15 @@
 from flask import Flask
 
 app = Flask(__name__)
+
 @app.route('/hello')
 def hello():
     return "Welcom to Hello World"
+
+@app.route('/user/<username>')
+def user(username):
+    return f'Welcome to {username}'
+
 @app.route('/')
 def index():
     return "Home Page"
