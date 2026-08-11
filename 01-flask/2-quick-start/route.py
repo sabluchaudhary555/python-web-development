@@ -19,7 +19,7 @@ def index():
     return "Home Page"
 
 
-def user(username):             # Add url rule
+def user(username):             # Add url rule in route
     return f'Welcom to {username} in add url';
 app.add_url_rule('/user/<username>', view_func=user)
 
