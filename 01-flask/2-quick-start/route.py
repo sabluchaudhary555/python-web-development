@@ -10,6 +10,10 @@ def hello():
 def user(username):
     return f'Welcome to {username}'
 
+@app.route('/post/<int:post_id>')
+def post(post_id):
+    return f' Your Podt Id is {post_id}'
+
 @app.route('/')
 def index():
     return "Home Page"
