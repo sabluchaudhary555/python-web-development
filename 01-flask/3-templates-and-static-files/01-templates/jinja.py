@@ -9,10 +9,10 @@ def home():
 def welcome(name):
     return render_template("welcome.html", name=name)
 
-@app.route("/about")
+@app.route("/about2")
 def about():
     sites = ['twitter', 'facebook', 'instagram', 'whatsapp']
-    return render_template("about.html", sites=sites)
+    return render_template("about2.html", sites=sites)
 
 if __name__ == "__main__":
     app.run(debug=True)
