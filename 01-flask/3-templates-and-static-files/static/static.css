@@ -9,6 +9,11 @@ h1 {
     color: #2c3e50;
 }
 
+h2 {
+    color: #34495e;
+    margin-top: 30px;
+}
+
 .demo-img {
     width: 300px;
     border-radius: 8px;
@@ -19,5 +24,10 @@ h1 {
 .demo-video {
     width: 400px;
     border-radius: 8px;
+    margin: 10px 0;
+}
+
+.demo-audio {
+    width: 400px;
     margin: 10px 0;
 }
