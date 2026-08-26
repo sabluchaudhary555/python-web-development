@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup Form</title>
+</head>
+<body>
+    <h2>Signup Form</h2>
+
+    <!-- Action /Signup route par point kar raha hai -->
+    <form method="POST" action="/Signup">
+
+        <!-- CSRF protection ke liye hidden tag -->
+        {{ form.hidden_tag() }}
+
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username() }}
+        </p>
+
+        <!-- Agar username lenth 5 se kam ho, toh error yahan dikhega -->
+        {% if form.username.errors %}
+            <ul style="color: red;">
+            {% for error in form.username.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password() }}
+        </p>
+
+        {% if form.password.errors %}
+            <ul style="color: red;">
+            {% for error in form.password.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            {{ form.submit() }}
+        </p>
+    </form>
+</body>
+</html>
