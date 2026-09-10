@@ -20,10 +20,10 @@ with engine.connect() as conn:
     # Topic 1 & 2: SQL Expressions & Executing Expression (Insert Data)
     # ----------------------------------------------------
     insert_stmt = insert(students_table).values([
-        {'name': 'Sablu', 'age': 22},
-        {'name': 'Rahul', 'age': 24},
-        {'name': 'Aman', 'age': 19},
-        {'name': 'Priya', 'age': 22}
+        {'name': 'Alice', 'age': 22},
+        {'name': 'Bob', 'age': 24},
+        {'name': 'Charlie', 'age': 19},
+        {'name': 'David', 'age': 22}
     ])
     conn.execute(insert_stmt)
     conn.commit()
@@ -50,10 +50,10 @@ with engine.connect() as conn:
     # ----------------------------------------------------
     # Topic 5: Using Conjunctions (and_, or_, where)
     # ----------------------------------------------------
-    # Example: Students named 'Sablu' OR (age > 20 AND age < 25)
+    # Example: Students named 'Alice' OR (age > 20 AND age < 25)
     conjunction_stmt = select(students_table).where(
         or_(
-            students_table.c.name == 'Sablu',
+            students_table.c.name == 'Alice',
             and_(
                 students_table.c.age > 20,
                 students_table.c.age < 25
