@@ -11,5 +11,9 @@ def home():
 def about():
     return 'welcome to about page'
 
+@app.route('/user/<name>')
+def user(name):
+    return f' Hello {name}'
+
 if __name__ == '__main__':
     app.run(debug=True)
