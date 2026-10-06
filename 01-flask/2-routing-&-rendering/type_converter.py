@@ -1,35 +1,29 @@
-from flask import Flask
+from flask import Flask, request
+import uuid
 
 app = Flask(__name__)
 
-# 1. String converter (Default: accepts any text without a slash)
-@app.route("/user/<string:username>")
-def show_user(username):
-    return f"Username: {username}"
 
-
-# 2. Integer converter (Accepts positive integers only; returns 404 if invalid)
+# 1. Standard Dynamic Route with Type Converter
 @app.route("/post/<int:post_id>")
 def show_post(post_id):
     return f"Post ID: {post_id}"
 
 
-# 3. Float converter (Accepts positive floating-point numbers)
-@app.route("/price/<float:amount>")
-def show_price(amount):
-    return f"Price: {amount}"
+# 2. Dynamic Route combined with Query Parameters
+# URL Example: http://127.0.0.1:5000/search?q=flask
+@app.route("/search")
+def search():
+    query = request.args.get("q")
+    return f"Searching for: {query}"
 
 
-# 4. Path converter (Accepts text, including forward slashes '/')
-@app.route("/files/<path:filepath>")
-def show_file(filepath):
-    return f"File path: {filepath}"
-
-
-# 5. UUID converter (Accepts valid Universally Unique Identifier strings)
+# 3. UUID Converter with Query Parameters
+# URL Example: http://127.0.0.1:5000/session/12345678-1234-5678-1234-567812345678?action=refresh
 @app.route("/session/<uuid:session_id>")
-def show_session(session_id):
-    return f"Session UUID: {session_id}"
+def manage_session(session_id):
+    action = request.args.get("action", "view")
+    return f"Session UUID: {session_id} | Action Requested: {action}"
 
 
 if __name__ == "__main__":
