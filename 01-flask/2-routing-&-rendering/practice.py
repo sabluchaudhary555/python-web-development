@@ -16,7 +16,7 @@ def about():
 def user(name):
     return f' Hello {name}'
 
-# MULTIPLE DYNAMIC ROUTING
+# MULTIPLE DYNAMIC ROUTING WITH URL CONVERTER
 @app.route('/user/<name>/<int:id>')
 def post(name, id):
     return f'name is {name}, id is {id}'
