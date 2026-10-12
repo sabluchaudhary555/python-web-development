@@ -46,10 +46,10 @@ def home():
 ```python
 @app.route("/<name>")
 def welcome(name):
-    return render_template("welcome.html", name=name)
+    return render_template("jinja.html", name=name)
 ```
 ```html
-<!-- templates/welcome.html -->
+<!-- templates/jinja.html -->
 <h1>Welcome, {{ name }}!</h1>
 ```
 

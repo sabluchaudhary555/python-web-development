@@ -273,10 +273,10 @@ return render_template("file.html", variable_name=value)
 ```python
 @app.route("/<name>")
 def welcome(name):
-    return render_template("welcome.html", name=name)
+    return render_template("jinja.html", name=name)
 ```
 ```html
-<!-- welcome.html -->
+<!-- jinja.html -->
 <h1>Welcome, {{ name }}!</h1>
 ```
 
