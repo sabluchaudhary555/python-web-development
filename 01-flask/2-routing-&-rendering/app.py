@@ -53,8 +53,7 @@ def search():
 # ----------------------------------------------------
 @app.route("/old-home")
 def old_home():
-    # Function name ke basis par dynamic URL bana kar redirect karta hai
-    return redirect(url_for("home"))
+        return redirect(url_for("home"))
 
 
 # ----------------------------------------------------
@@ -62,7 +61,7 @@ def old_home():
 # ----------------------------------------------------
 @app.route("/dashboard")
 def dashboard():
-    # Yahan koi alag file nahi hai, seedha string ke andar Jinja syntax execute hota hai
+    
     template_code = """
         <h2>User Dashboard</h2>
         <p>User: {{ name }}</p>
@@ -75,7 +74,7 @@ def dashboard():
         <a href="{{ url_for('home') }}">Back to Home</a>
     """
     skills_list = ["Python", "Flask", "SQLAlchemy"]
-    return render_template_string(template_code, name="Sablu", skills=skills_list)
+    return render_template_string(template_code, name="Hacker", skills=skills_list)
 
 
 # ----------------------------------------------------
