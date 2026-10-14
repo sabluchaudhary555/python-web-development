@@ -1,0 +1,104 @@
+<!-- 1. Extend the base template -->
+{% extends "base.html" %}
+
+<!-- 2. Override the title block -->
+{% block title %}Dashboard - {{ site_name }}{% endblock %}
+
+<!-- 3. Fill in the content block -->
+{% block content %}
+
+    {# This is a Jinja2 comment. It will NOT appear in the page source code. #}
+
+    <!-- Using super(): Keeps parent block content if there was any -->
+    {{ super() }}
+
+    <!-- Variables & Filters -->
+    <h1>Welcome, {{ user_info.name | upper }}!</h1>
+    <p>Rounded Price: ${{ price | round(2) }}</p>
+    <p>Custom Filter applied to name: {{ user_info.name | reverse_string }}</p>
+
+    <!-- Conditionals & Tests -->
+    {% if is_logged_in and user_info is defined %}
+        <p>Status: Logged In</p>
+    {% else %}
+        <p>Status: Guest</p>
+    {% endif %}
+
+    <!-- Operators & Inline If (Ternary) -->
+    <p>5 + 3 = {{ 5 + 3 }}</p>
+    <p>Role check: {{ "Admin Access" if user_info.role == "admin" else "Standard Access" }}</p>
+
+    <hr>
+
+    <!-- Looping over a Dictionary -->
+    <h3>User Profile (Dict Loop)</h3>
+    <ul>
+    {% for key, value in user_info.items() %}
+        <li>{{ key | capitalize }}: {{ value }}</li>
+    {% endfor %}
+    </ul>
+
+    <!-- Looping over a List + Loop Properties + Filtering + For-Else -->
+    <h3>Tech Stack (Filtered List Loop)</h3>
+    <ul>
+    <!-- Only iterate over items that are NOT "Python" -->
+    {% for tech in tech_stack if tech != "Python" %}
+        <!-- Whitespace control (-): Strips extra blank lines around tags -->
+        <li>
+            {%- if loop.first %}🏆 {% endif -%}
+            {{ loop.index }}: {{ tech }}
+        </li>
+    {% else %}
+        <li>No technology found.</li>
+    {% endfor %}
+    </ul>
+
+    <hr>
+
+    <!-- Setting Variables, Scoping (with), and Namespace -->
+
+    <!-- Global set -->
+    {% set greeting = "Hello there!" %}
+
+    <!-- Local Scope (with) -->
+    {% with temp_msg = "This is temporary" %}
+        <p>{{ greeting }} - {{ temp_msg }}</p>
+    {% endwith %}
+    <!-- temp_msg cannot be used here, but greeting can -->
+
+    <!-- Namespace: Tracking mutable values across a loop -->
+    {% set ns = namespace(total=0) %}
+    <!-- Using built-in range() function -->
+    {% for i in range(1, 4) %}
+        {% set ns.total = ns.total + i %}
+    {% endfor %}
+    <p>Namespace Loop Total (1+2+3): {{ ns.total }}</p>
+
+    <hr>
+
+    <!-- Escaping & Safe Filter -->
+    {% set script_tag = "<b>Bold Text</b>" %}
+    <p>Escaped default: {{ script_tag }}</p>
+    <p>Unescaped (Safe): {{ script_tag | safe }}</p>
+
+    <hr>
+
+    <!-- Defining and using a Macro (Like a reusable function) -->
+    {% macro render_button(label, color="blue") %}
+        <button style="background-color: {{ color }}; color: white;">{{ label }}</button>
+    {% endmacro %}
+
+    <p>
+        {{ render_button("Save Changes", "green") }}
+        {{ render_button("Delete", "red") }}
+    </p>
+
+    <hr>
+
+    <!-- Raw block: Display literal Jinja2 syntax -->
+    <p>
+        To print a variable in Jinja2, write:
+        {% raw %}{{ variable_name }}{% endraw %}
+    </p>
+
+{% endblock %}
