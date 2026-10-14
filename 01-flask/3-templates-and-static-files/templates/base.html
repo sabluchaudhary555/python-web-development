@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Template Inheritance: Defining a block with a default fallback -->
+    <title>{% block title %}Default Site Title{% endblock %}</title>
+
+    <!-- Dynamic URL Generation for static files -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+</head>
+<body>
+    <!-- Template Inclusion: Inserting a reusable HTML snippet -->
+    {% include "navbar.html" %}
+
+    <div class="main-content">
+        <!-- Template Inheritance: Empty block for child templates to fill -->
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Using a Context Processor variable (available automatically) -->
+    <footer>&copy; 2026 {{ site_name }}</footer>
+</body>
+</html>
