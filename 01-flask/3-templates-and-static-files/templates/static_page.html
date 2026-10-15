@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Static Files Example</title>
+    <!-- Linking CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='static.css') }}">
+    <!-- Linking JS -->
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <h1>Static Media Implementation</h1>
+
+    <!-- Displaying an Image -->
+    <h3>1. Image</h3>
+    <img src="{{ url_for('static', filename='images/sample.jpg') }}" alt="Sample Image" width="300">
+
+    <!-- Playing Audio -->
+    <h3>2. Audio</h3>
+    <audio controls>
+        <source src="{{ url_for('static', filename='audios/sample.mp3') }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Playing Video -->
+    <h3>3. Video</h3>
+    <video width="400" controls>
+        <source src="{{ url_for('static', filename='videos/sample.mp4') }}" type="video/mp4">
+        Your browser does not support the video element.
+    </video>
+</body>
+</html>
