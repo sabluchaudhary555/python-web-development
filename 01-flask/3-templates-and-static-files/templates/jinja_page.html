@@ -1,14 +1,137 @@
+<!-- 1. Template Inheritance -->
 {% extends "base.html" %}
 
-{% block title %}Jinja Concepts{% endblock %}
+{% block title %}All Jinja Concepts{% endblock %}
 
 {% block content %}
-    <h1>Welcome, {{ user_info.name | reverse_string }}!</h1>
 
-    <h3>Tech Stack Loop</h3>
+    <!-- 2. Using super() to keep parent content (if base.html had any content block text) -->
+    {{ super() }}
+
+    <h1>Mastering Jinja2 Features</h1>
+
+    {# 3. Comments (This note will not appear in browser source code) #}
+
+    <hr>
+    <!-- 4. Variables & Filters -->
+    <h3>Variables & Filters</h3>
+    <p>Original Name: {{ user_info.name }}</p>
+    <p>Uppercase: {{ user_info.name | upper }}</p>
+    <p>Price Rounded: ${{ price | round(2) }}</p>
+    <p>Default Filter: {{ missing_var | default("N/A") }}</p>
+    <p>Custom Filter (Reverse): {{ user_info.name | reverse_string }}</p>
+
+    <hr>
+    <!-- 5. Conditionals & Tests -->
+    <h3>Conditionals & Tests</h3>
+    {% if is_logged_in and user_info is defined %}
+        <p>Status: Logged in securely.</p>
+    {% elif not is_logged_in %}
+        <p>Status: Please log in.</p>
+    {% else %}
+        <p>Status: Unknown.</p>
+    {% endif %}
+
+    <!-- Using 'is' tests (even, string, etc.) -->
+    {% if number is even %}
+        <p>{{ number }} is an EVEN number.</p>
+    {% endif %}
+
+    <hr>
+    <!-- 6. Operators, Math & Ternary -->
+    <h3>Operators & Math</h3>
+    <p>Math (5 ** 2): {{ 5 ** 2 }}</p>
+    <p>Ternary (Inline If): {{ "Active" if is_logged_in else "Inactive" }}</p>
+
+    <hr>
+    <!-- 7. Loops (Lists) & Loop Variables -->
+    <h3>List Loops & Whitespace Control</h3>
     <ul>
-    {% for tech in tech_stack %}
-        <li>{{ loop.index }}: {{ tech }}</li>
+    <!-- Whitespace control (-): removes extra newlines around list tags -->
+    {%- for site in sites -%}
+        <li>{{ loop.index }}: {{ site | capitalize }}
+            {% if loop.first %}(First Item){% endif %}
+            {% if loop.last %}(Last Item){% endif %}
+        </li>
+    {%- endfor -%}
+    </ul>
+
+    <hr>
+    <!-- 8. Loops (Dictionaries) & For-Else -->
+    <h3>Dictionary Loops & For-Else</h3>
+    <ul>
+    {% for key, value in user_info.items() %}
+        <li><strong>{{ key | capitalize }}:</strong> {{ value }}</li>
+    {% else %}
+        <li>No user info found.</li>
     {% endfor %}
     </ul>
+
+    <hr>
+    <!-- 9. Filtering inside a Loop -->
+    <h3>Loop Filtering</h3>
+    <ul>
+    <!-- Only loop over sites that are NOT facebook -->
+    {% for site in sites if site != 'facebook' %}
+        <li>{{ site }}</li>
+    {% endfor %}
+    </ul>
+
+    <hr>
+    <!-- 10. Setting Variables & Scoping -->
+    <h3>Setting Variables & Scoping</h3>
+    {% set global_tax = 18 %}
+    <p>Global Tax Rate: {{ global_tax }}%</p>
+
+    <!-- 'with' block creates local scope -->
+    {% with temp_discount = 10 %}
+        <p>Temporary Discount Inside Scope: {{ temp_discount }}%</p>
+    {% endwith %}
+    <!-- temp_discount cannot be printed outside the block -->
+
+    <hr>
+    <!-- 11. Namespace (Tracking mutable variables inside a loop) -->
+    <h3>Namespace Objects</h3>
+    {% set ns = namespace(total=0) %}
+    {% for n in range(1, 6) %}
+        {% set ns.total = ns.total + n %}
+    {% endfor %}
+    <p>Sum of numbers 1 to 5 using Namespace: {{ ns.total }}</p>
+
+    <hr>
+    <!-- 12. Escaping vs Safe Filter -->
+    <h3>Escaping (XSS Prevention)</h3>
+    <p>Auto-escaped (Default): {{ html_snippet }}</p>
+    <p>Unescaped (Safe): {{ html_snippet | safe }}</p>
+
+    <!-- Manual Autoescape Block -->
+    {% autoescape false %}
+        <p>Inside Autoescape False block: {{ "<i>Italic text rendered safely</i>" }}</p>
+    {% endautoescape %}
+
+    <hr>
+    <!-- 13. Macros (Reusable HTML Functions) -->
+    <h3>Macros</h3>
+    {% macro render_badge(text, color="green") %}
+        <span style="background-color: {{ color }}; color: white; padding: 5px; border-radius: 4px;">
+            {{ text }}
+        </span>
+    {% endmacro %}
+
+    <p>User Role: {{ render_badge("Admin", "red") }}</p>
+    <p>Account Status: {{ render_badge("Verified") }}</p>
+
+    <hr>
+    <!-- 14. Built-in Functions & Slicing -->
+    <h3>Built-in Functions & Slicing</h3>
+    <p>Slicing a string (0:4): {{ "Hacker"[0:4] }}</p>
+    <p>Slicing a list: {{ [10, 20, 30, 40][1:3] }}</p>
+
+    <hr>
+    <!-- 15. Raw Block -->
+    <h3>Raw Blocks</h3>
+    {% raw %}
+        <p>This syntax {{ is_logged_in }} will not be processed by Jinja2 and prints exactly as written.</p>
+    {% endraw %}
+
 {% endblock %}
